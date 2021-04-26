@@ -1,0 +1,17 @@
+567b66a75fbab979ebe2545cee12aa73 *DESCRIPTION
+604a7802254dbe468a45ac1040ddf809 *LICENSE
+76d192b2a2057eb82152fcb2806010dc *NAMESPACE
+df5788c1280217426498e0c406580cf0 *NEWS.md
+a77ab90ae01ff4339231f4075345a5cc *R/functions.R
+66f58e38d9c525ef1c3b74ee21e97ba5 *R/sysdata.rda
+4bfb9b44c5b01e5508bcc3c1330bd23c *README.md
+fdf1c6ca4a68743e204c63e815a824da *build/partial.rdb
+88de2e1d29b7a949aac3e131877f338c *build/vignette.rds
+7ea19516b51e79554979ab7810e4727a *inst/doc/babelgene-intro.R
+546e6113ffcdab19813c038acd261e24 *inst/doc/babelgene-intro.Rmd
+adb3c457421d5b64d06af05aeb94ece6 *inst/doc/babelgene-intro.html
+5e28596b7cadd3a8ec2c07cae54291b2 *man/orthologs.Rd
+b60a81556af1f32d1024a9fde25f3d15 *man/species.Rd
+1edbe0ac2ed91e009093a9b7946ebc10 *tests/testthat.R
+b4c96dc179eae9f5883579fc69b281f7 *tests/testthat/test-functions.R
+546e6113ffcdab19813c038acd261e24 *vignettes/babelgene-intro.Rmd
