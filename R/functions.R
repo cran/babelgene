@@ -1,12 +1,13 @@
 #' Retrieve gene orthologs/homologs
 #'
 #' Retrieve gene orthologs/homologs for a set of genes.
+#' Converts between human and non-human analogs.
 #'
 #' @param genes A vector of gene symbols or Entrez/Ensembl IDs.
-#' @param species Species name, such as \code{Mus musculus} or \code{mouse} (see \code{species()} for options).
-#' @param human Input genes are human (or not).
-#' @param min_support Minimum number of supporting sources.
-#' @param top For each gene, output only the match with the highest support level.
+#' @param species Species name, such as \code{Mus musculus} or \code{mouse} (see \code{\link[=species]{species()}} for options).
+#' @param human A logical scalar indicating if the input genes are human. If \code{TRUE}, the input genes are human. If \code{FALSE}, the input genes correspond to the non-human species and the output will be the human equivalents.
+#' @param min_support Minimum number of supporting source databases.
+#' @param top For each gene, output only the match with the highest support level if there are multiple hits.
 #'
 #' @return A data frame of gene pairs (human and given species).
 #'
@@ -28,16 +29,19 @@
 orthologs <- function(genes, species, human = TRUE, min_support = 3, top = TRUE) {
   # check if inputs are valid
   if (!is.vector(genes)) {
-    stop("'genes' must be a vector (can be a single gene)")
+    stop("`genes` is not a character vector (can be a single gene)")
   }
   if (!is(species, "character")) {
-    stop("'species' must be a character string")
+    stop("`species` is not a character string")
   }
   if (!is.logical(human)) {
-    stop("'human' must be TRUE/FALSE")
+    stop("`human` is not TRUE/FALSE")
+  }
+  if (!is.numeric(min_support)) {
+    stop("`min_support` is not a number")
   }
   if (!is.logical(top)) {
-    stop("'top' must be TRUE/FALSE")
+    stop("`top` is not TRUE/FALSE")
   }
 
   # subset the orthologs table to the relevant species
@@ -59,7 +63,7 @@ orthologs <- function(genes, species, human = TRUE, min_support = 3, top = TRUE)
       gene_col <- "human_ensembl"
       odf <- odf[odf$human_ensembl %in% genes, ]
     } else {
-      stop("none of the genes are valid human genes")
+      stop("no orthologs found or the genes are not valid human genes")
     }
   } else {
     if (any(odf$entrez %in% genes)) {
@@ -75,11 +79,14 @@ orthologs <- function(genes, species, human = TRUE, min_support = 3, top = TRUE)
       gene_col <- "ensembl"
       odf <- odf[odf$ensembl %in% genes, ]
     } else {
-      stop("none of the genes are valid")
+      stop("no orthologs found or the genes are not valid")
     }
   }
 
-  # select only the top match for each gene
+  # filter by the number of supporting databases
+  odf <- odf[odf$support_n >= min_support, ]
+
+  # select only the best match for each gene
   if (top) {
     odf <- dplyr::group_by(odf, .data[[gene_col]], .data[["taxon_id"]])
     odf <- dplyr::top_n(odf, n = 1, wt = .data[["support_n"]])
@@ -97,7 +104,7 @@ orthologs <- function(genes, species, human = TRUE, min_support = 3, top = TRUE)
 #'
 #' List the species with available human orthologs.
 #'
-#' @param species Species name, such as \code{Mus musculus} or \code{mouse}.
+#' @param species Species name, such as \code{Mus musculus} or \code{mouse}. If specified, will return results for the given species only.
 #'
 #' @return A data frame of the available species.
 #'
@@ -108,6 +115,9 @@ orthologs <- function(genes, species, human = TRUE, min_support = 3, top = TRUE)
 #'
 #' @examples
 #' species()
+#' species("Mus musculus")
+#' species("mouse")
+#' species("rat")
 species <- function(species = NULL) {
   # generate a more readable version of the species table
   sci_names <- species_df[species_df$name_class == "scientific name", 1:2]
@@ -126,7 +136,7 @@ species <- function(species = NULL) {
 
   # check if the species name is valid if it is specified
   if (!is(species, "character")) {
-    stop("'species' is not a character string")
+    stop("`species` is not a character string")
   }
   if (!species %in% species_df$name) {
     stop("unknown species, must be one of: ", toString(species_df$name))

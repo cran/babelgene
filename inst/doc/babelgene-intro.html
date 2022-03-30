@@ -143,18 +143,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p>Genomic analysis of model organisms often requires the use of databases based on human data or making comparisons to patient-derived resources. This requires converting genes between human and non-human equivalents. The <code>babelgene</code> R package helps to simplify the process. It provides provides gene orthologs/homologs:</p>
+<p>Genomic analysis of model organisms frequently requires the use of databases based on human data or making comparisons to patient-derived resources. This requires harmonization of gene names into the same gene space. The <code>babelgene</code> R package helps to simplify the conversion process. It provides gene orthologs/homologs:</p>
 <ul>
-<li>in an R-friendly tidy/long format with one gene pair per row</li>
 <li>for multiple frequently studied model organisms, such as mouse, rat, fly, and zebrafish</li>
 <li>sourced from multiple databases</li>
 <li>as gene symbols, NCBI Entrez, and Ensembl IDs</li>
-<li>without a need for an active internet connection</li>
+<li>without accessing external resources and requiring an active internet connection</li>
+<li>in an R-friendly “<a href="https://r4ds.had.co.nz/tidy-data.html">tidy</a>” format with one gene pair per row</li>
 </ul>
 </div>
 <div id="usage" class="section level2">
 <h2>Usage</h2>
-<p>You can install the <code>babelgene</code> R package from CRAN.</p>
+<p>You can install the <code>babelgene</code> R package from <a href="https://cran.r-project.org/package=babelgene">CRAN</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;babelgene&quot;</span>)</span></code></pre></div>
 <p>Load <code>babelgene</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(babelgene)</span></code></pre></div>
@@ -197,10 +197,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">orthologs</span>(<span class="at">genes =</span> <span class="st">&quot;ENSG00000111640&quot;</span>, <span class="at">species =</span> <span class="st">&quot;mouse&quot;</span>, <span class="at">human =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   human_symbol human_entrez   human_ensembl taxon_id symbol entrez</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1        GAPDH         2597 ENSG00000111640    10090  Gapdh  14433</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              ensembl                                                   support</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 ENSMUSG00000057666 HGNC|HomoloGene|NCBI|OMA|OrthoDB|OrthoMCL|Panther|Treefam</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   support_n</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1         8</span></span></code></pre></div>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              ensembl</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 ENSMUSG00000057666</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                             support support_n</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Ensembl|HGNC|HomoloGene|NCBI|OMA|OrthoDB|OrthoMCL|Panther|Treefam         9</span></span></code></pre></div>
 <p>The <code>orthologs()</code> function requires the <code>species</code> parameter to be set. You can check all the species that can be queried with the help of the <code>species()</code> function.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">species</span>()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    taxon_id                 scientific_name</span></span>
@@ -223,30 +223,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17   284812 Schizosaccharomyces pombe 972h-</span></span>
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18     9823                      Sus scrofa</span></span>
 <span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19     8364              Xenopus tropicalis</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                       common_name</span></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1                                     Carolina anole, green anole</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   bovine, cattle, cow, dairy cow, domestic cattle, domestic cow</span></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3                                                       roundworm</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4                                                       dog, dogs</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5               leopard danio, zebra danio, zebra fish, zebrafish</span></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6                                                       fruit fly</span></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7                                   domestic horse, equine, horse</span></span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8                                         cat, cats, domestic cat</span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9                    bantam, chicken, chickens, Gallus domesticus</span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 rhesus macaque, rhesus macaques, Rhesus monkey, rhesus monkeys</span></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11                                      gray short-tailed opossum</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12                                             house mouse, mouse</span></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13              duck-billed platypus, duckbill platypus, platypus</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14                                                     chimpanzee</span></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15                               brown rat, Norway rat, rat, rats</span></span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16                   baker&#39;s yeast, brewer&#39;s yeast, S. cerevisiae</span></span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17                                                           &lt;NA&gt;</span></span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18                                    pig, pigs, swine, wild boar</span></span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19                      tropical clawed frog, western clawed frog</span></span></code></pre></div>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                                                common_name</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1                                              Carolina anole, green anole</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  bovine, cattle, cow, dairy cow, domestic cattle, domestic cow, ox, oxen</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3                                                                     &lt;NA&gt;</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4                                                                dog, dogs</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5                        leopard danio, zebra danio, zebra fish, zebrafish</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6                                                                fruit fly</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7                                            domestic horse, equine, horse</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8                                                  cat, cats, domestic cat</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9                             bantam, chicken, chickens, Gallus domesticus</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10          rhesus macaque, rhesus macaques, Rhesus monkey, rhesus monkeys</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11                                               gray short-tailed opossum</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12                                                      house mouse, mouse</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13                       duck-billed platypus, duckbill platypus, platypus</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14                                                              chimpanzee</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15                                        brown rat, Norway rat, rat, rats</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16                            baker&#39;s yeast, brewer&#39;s yeast, S. cerevisiae</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17                                                                    &lt;NA&gt;</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18                                             pig, pigs, swine, wild boar</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19                               tropical clawed frog, western clawed frog</span></span></code></pre></div>
 </div>
 <div id="details" class="section level2">
 <h2>Details</h2>
 <p>The package is based on the data provided by the Human Genome Organization (HUGO) Gene Nomenclature Committee (HGNC) at the European Bioinformatics Institute. The HGNC Comparison of Orthology Predictions (HCOP) integrates the orthology assertions predicted for human genes by eggNOG, Ensembl Compara, HGNC, HomoloGene, Inparanoid, NCBI Gene Orthology, OMA, OrthoDB, OrthoMCL, Panther, PhylomeDB, TreeFam and ZFIN.</p>
+<p>The name <code>babelgene</code> is derived from the <a href="https://en.wikipedia.org/wiki/Babel_fish">Babel Fish</a>, a fictional species of fish that could translate for humans.</p>
 </div>
 
 
