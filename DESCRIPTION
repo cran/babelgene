@@ -1,7 +1,7 @@
 Type: Package
 Package: babelgene
 Title: Gene Orthologs for Model Organisms in a Tidy Data Format
-Version: 22.3
+Version: 22.9
 Authors@R: 
     person("Igor", "Dolgalev", , "igor.dolgalev@nyumc.org", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-4451-126X"))
@@ -23,10 +23,10 @@ Suggests: covr, knitr, rmarkdown, testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 Encoding: UTF-8
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 NeedsCompilation: no
-Packaged: 2022-03-30 15:45:15 UTC; id460
+Packaged: 2022-09-28 16:45:01 UTC; id460
 Author: Igor Dolgalev [aut, cre] (<https://orcid.org/0000-0003-4451-126X>)
 Maintainer: Igor Dolgalev <igor.dolgalev@nyumc.org>
 Repository: CRAN
-Date/Publication: 2022-03-30 16:30:02 UTC
+Date/Publication: 2022-09-29 09:40:17 UTC
